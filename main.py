@@ -46,6 +46,15 @@ class CSV:
             print(f'Transactions from {start_date.strftime(CSV.FORMAT)} to {end_date.strftime(CSV.FORMAT)}')
             print(filtered_df.to_string(index=False, formatters={'date': lambda x: x.strftime(CSV.FORMAT)}))
 
+            total_income = filtered_df[filtered_df['category'] == 'Income']['amount'].sum()
+            total_expense = filtered_df[filtered_df['category'] == 'Expense']['amount'].sum()
+            print("\nSummary: ")
+            print(f"Total Income: ${total_income:.2f}")
+            print(f"Total Expense: ${total_expense:.2f}")
+            print(f"Net Savings: ${(total_income - total_expense):.2f}")
+
+        return filtered_df
+
 
 def add():
     CSV.initialize_csv()
@@ -59,4 +68,5 @@ def add():
 # CSV.add_entry("20-07-2024", 125.65, "Income", "Salary")
 
 
-add()
+CSV.get_transactions('01-01-2023', '30-12-2024')
+# add()
